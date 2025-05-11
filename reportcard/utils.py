@@ -12,5 +12,5 @@ def calculate_grade(marks):
     else:
         return "F"
 
-def calculate_overall_grade(percentage):
-    return calculate_grade(percentage)
+# def calculate_overall_grade(percentage):
+#     return calculate_grade(percentage)

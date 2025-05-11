@@ -10,7 +10,7 @@ class Students(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'yourapp_student'  # Optional: preserves the original table name if renaming
+        db_table = 'yourapp_student'  # preserves the original table name if renaming
 
     def __str__(self):
         return f"{self.name} ({self.roll_number})"
