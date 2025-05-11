@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Report Card PDF</title>
+    <style>
+        body {
+            font-family: "Helvetica", sans-serif;
+            margin: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin: 6px 0;
+        }
+
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .signature p {
+            margin: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Report Card</h2>
+
+    <div class="info">
+        <p><strong>Name:</strong> {{ report.student.name }}</p>
+        <p><strong>Roll Number:</strong> {{ report.student.roll_number }}</p>
+        <p><strong>Class:</strong> {{ report.student.class_name }}</p>
+        <p><strong>Section:</strong> {{ report.student.section }}</p>
+    </div>
+
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Grade</th>
+        </tr>
+        {% for sub in report.report_card_subjects.all %}
+        <tr>
+            <td>{{ sub.subject.name }}</td>
+            <td>{{ sub.marks }}</td>
+            <td>{{ sub.grade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="footer">
+        <p><strong>Total Marks:</strong> {{ report.total_marks }}</p>
+        <p><strong>Percentage:</strong> {{ report.percentage }}%</p>
+        <p><strong>Final Grade:</strong> {{ report.overall_grade }}</p>
+        <p><strong>Teacher Comments:</strong> {{ report.comments }}</p>
+    </div>
+
+    <div class="signature">
+        <p>________________________</p>
+        <p><strong>Class Teacher</strong></p>
+    </div>
+</body>
+</html>

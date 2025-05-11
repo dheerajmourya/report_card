@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preview Report Card</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 700px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .info p {
+            margin: 6px 0;
+            font-size: 16px;
+            color: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .summary p {
+            margin: 8px 0;
+        }
+
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .actions a:hover {
+            background-color: #2980b9;
+        }
+
+        .actions a:last-child {
+            background-color: #2ecc71;
+        }
+
+        .actions a:last-child:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Report Card</h2>
+
+        <div class="info">
+            <p><strong>Name:</strong> {{ report.student.name }}</p>
+            <p><strong>Roll Number:</strong> {{ report.student.roll_number }}</p>
+            <p><strong>Class:</strong> {{ report.student.class_name }}</p>
+            <p><strong>Section:</strong> {{ report.student.section }}</p>
+        </div>
+
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Grade</th>
+            </tr>
+            {% for sub in report.report_card_subjects.all %}
+            <tr>
+                <td>{{ sub.subject.name }}</td>
+                <td>{{ sub.marks }}</td>
+                <td>{{ sub.grade }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="summary">
+            <p><strong>Total Marks:</strong> {{ report.total_marks }}</p>
+            <p><strong>Percentage:</strong> {{ report.percentage }}%</p>
+            <p><strong>Final Grade:</strong> {{ report.overall_grade }}</p>
+            <p><strong>Comments:</strong> {{ report.comments }}</p>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'download_pdf' report.id %}">Download PDF</a>
+            <a href="{% url 'edit_report_card' report.id %}">Edit Report Card</a>
+        </div>
+    </div>
+</body>
+</html>

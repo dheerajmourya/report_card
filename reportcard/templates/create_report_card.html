@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Report Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f3f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .subject-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .subject-row input {
+            flex: 1;
+        }
+
+        .add-subject-btn,
+        .remove-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .add-subject-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .add-subject-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+
+        h4 {
+            margin-top: 25px;
+            color: #444;
+        }
+    </style>
+
+    <script>
+        function addSubjectRow() {
+            const container = document.getElementById('subject-container');
+            const row = document.createElement('div');
+            row.className = 'subject-row';
+            row.innerHTML = `
+                <input type="text" name="subject[]" placeholder="Subject Name" required>
+                <input type="number" name="marks[]" placeholder="Marks" required>
+                <button type="button" class="remove-btn" onclick="removeSubjectRow(this)">Remove</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function removeSubjectRow(button) {
+            const container = document.getElementById('subject-container');
+            if (container.children.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert("At least one subject is required.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Report Card</h2>
+
+        <!-- ✅ Show Django messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Student Name" required>
+            <input type="text" name="roll" placeholder="Roll Number" required>
+            <input type="text" name="class" placeholder="Class" required>
+            <input type="text" name="section" placeholder="Section" required>
+
+            <h4>Subjects & Marks</h4>
+            <div id="subject-container">
+                <div class="subject-row">
+                    <input type="text" name="subject[]" placeholder="Subject Name" required>
+                    <input type="number" name="marks[]" placeholder="Marks" required>
+                    <button type="button" class="remove-btn" onclick="removeSubjectRow(this)">Remove</button>
+                </div>
+            </div>
+            <button type="button" class="add-subject-btn" onclick="addSubjectRow()">+ Add Subject</button>
+
+            <h4>Comments</h4>
+            <textarea name="comments" placeholder="Comments"></textarea>
+
+            <button type="submit" class="submit-btn">Generate Report Card</button>
+        </form>
+    </div>
+</body>
+</html>

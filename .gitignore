@@ -1,0 +1,30 @@
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+*.log
+# .gitignore
+.env
+
+
+
+# .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Env
+.env            ✅ Important!
+venv/
+myenv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
