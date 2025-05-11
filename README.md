@@ -38,7 +38,7 @@ cd report-card-django
 
 
 
-## Project Structure
+## Project Structure   
 
 
 report_card_project/
