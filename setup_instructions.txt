@@ -1,0 +1,51 @@
+-------------------------------------------
+Django Report Card Project – Setup Guide
+--------------------------------------------
+
+This guide explains how to set up the Django project after cloning it from GitHub.
+
+1. Clone the Repository
+git clone https://github.com/your-username/report_card_project.git
+cd report_card_project
+
+
+2. Create and Activate Virtual Environment
+
+# Windows:
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+
+3. Install Dependencies
+pip install -r requirements.txt
+
+4. Create .env File in Project Root
+Create a file named `.env` in the root directory :
+
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+
+5. Run Migrations
+python manage.py migrate
+
+
+6. (Optional) Create Superuser
+python manage.py createsuperuser
+
+
+7. Run the Server
+python manage.py runserver
+
+Visit the app in browser:
+http://127.0.0.1:8000/
+
+Notes:
+- Do NOT commit the `.env` file to GitHub
+- `db.sqlite3`, `__pycache__/`, `*.pyc`, `venv/` should be excluded using .gitignore
+- A sample `.env.example` can be provided if needed
+

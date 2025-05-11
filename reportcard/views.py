@@ -4,10 +4,10 @@ from .utils import calculate_grade
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from django.contrib import messages 
 
 def student_list(request):
-    students = Students.objects.all().order_by('-id')  # latest first
+    students = Students.objects.all().order_by('-id')  
     return render(request, 'students_list.html', {'students': students})
 
 def delete_student(request, student_id):
@@ -26,12 +26,12 @@ def create_report_card(request):
         subjects = request.POST.getlist('subject[]')
         marks_list = request.POST.getlist('marks[]')
 
-        # ✅ Check for duplicate roll number
+        #Check for duplicate roll number
         if Students.objects.filter(roll_number=roll).exists():
             messages.error(request, f'Roll number {roll} already exists. Please use a unique roll number.')
             return redirect('create_report_card')  # 🔁 Redirect so message hides after refresh
 
-        # ✅ Create new student
+        # Create new student
         student = Students.objects.create(
             name=name,
             roll_number=roll,
@@ -90,7 +90,7 @@ def download_pdf(request, report_card_id):
     return response
 
 
-from django.contrib import messages  # ✅ Import thi
+
 def edit_report_card(request, report_card_id):
     report = get_object_or_404(ReportCard, id=report_card_id)
     student = report.student
@@ -105,19 +105,19 @@ def edit_report_card(request, report_card_id):
         subjects = request.POST.getlist('subject[]')
         marks_list = request.POST.getlist('marks[]')
 
-        # ✅ Check if another student has the same roll number
+        # Check if another student has the same roll number
         if Students.objects.filter(roll_number=roll).exclude(id=student.id).exists():
             messages.error(request, f"Roll number {roll} already exists for another student.")
             return redirect('edit_report_card', report_card_id=report.id)
 
-        # ✅ Update student info
+        # Update student info
         student.name = name
         student.roll_number = roll
         student.class_name = class_name
         student.section = section
         student.save()
 
-        # ✅ Update report card
+        # Update report card
         report.comments = comments
         report.report_card_subjects.all().delete()
 
