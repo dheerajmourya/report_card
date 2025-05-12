@@ -46,6 +46,7 @@ A report card is linked to multiple subjects via ReportCardSubject
 ReportCardSubject contains marks + grade for each subject
 
 
+2. Grade Calculation
 Q: How will you determine the grade based on marks (e.g., A+, A, B, etc.)?
 
 Ans:
